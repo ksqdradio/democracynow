@@ -22,15 +22,18 @@ def get_token(filename):
         return f.readline().strip()
 
 
-xml = read_dn_xml("http://audioport.org/rss.php?series=Thom+Hartmann+Program+-+Best+Of+One+Hour&id=37687970af9b74eafdb03455c8f47372")
+xml = read_dn_xml(
+    "http://audioport.org/rss.php?series=Thom+Hartmann+Program+-+Best+Of+One+Hour&id=37687970af9b74eafdb03455c8f47372"
+)
 print(xml["rss"]["channel"]["item"].keys())
 latest = xml["rss"]["channel"]["item"]
 url = latest["enclosure"]["@url"]
 file_name = url.split("/")[-1]
+file_date = file_name.split("_")[2]
 clean_file = latest["title"]
 clean_file = clean_file.split(":")[0]
 clean_file = "".join(clean_file.split())
-clean_file = clean_file + "-" + datetime.datetime.now().strftime('%Y-%m-%d') + ".mp3"
+clean_file = clean_file + "-" + file_date + ".mp3"
 print(f"Latest URL: {url}")
 print(f"Latest DN filename: {file_name}")
 print(f"Clean TH filename: {clean_file}")
@@ -42,8 +45,8 @@ if readfile:
 if usedropbox:
     apitoken = get_token("dropbox.apitoken")
     d = dropbox.Dropbox(apitoken)
-    with open(file_name, "rb") as f:
+    with open(clean_file, "rb") as f:
         meta = d.files_upload(
-            f.read(), "/" + file_name
+            f.read(), "/Thom Hartmann/" + clean_file
         )  # , mode=dropbox.files.WriteMode("overwrite"))
     print(meta)
