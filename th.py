@@ -1,12 +1,10 @@
 #!/usr/bin/env python
 
-import xmltodict
-import urllib.request
-import dropbox
-import pathlib
 import shutil
-import datetime
+import urllib.request
 
+import dropbox
+import xmltodict
 
 readfile = False
 usedropbox = False

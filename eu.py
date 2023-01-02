@@ -1,7 +1,5 @@
 #!/usr/bin/env python
 
-import datetime
-import pathlib
 import shutil
 import urllib.request
 
